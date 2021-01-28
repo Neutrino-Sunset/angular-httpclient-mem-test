@@ -1,0 +1,29 @@
+<h4>Home component</h4>
+
+<p>
+   This was intended to test whether an HttpClient instance in a component leaked if the component was destroyed while the
+   request was in progress.
+</p>
+
+<p>
+   However initial testing suggests the an HttpClient injected into a component is never deallocated when the component is
+   destroyed even if no request was ever made.
+</p>
+
+<p>
+   Steps To Recreate: <br>
+   1. Run the application. <br>
+   2. Create a memory snapshot. <br>
+   3. View snapshot summary, filter by HttpClient, note no HttpClient instances listed. <br>
+   4. Navigate to TestHttpClientComponent. <br>
+   5. Run memory snapshot, filter by HttpClient, note 1 instance and memory footprint. <br>
+   6. Navigate back to AppComponent using the 'Home' link _not_ pressing any button. <br>
+   7. Run memory snapshot, filter by HttpClient, note 1 instance still and same memory footprint as before?? <br>
+   8. Repeat many times. No more HttpClient instances are created, there is only ever one. <br>
+</p>
+
+<p>
+   Testing does however reveal that a component handler will process an HttpClient request even after the component has been
+   destroyed, (possibly as a side-effect of the HttpClient instance not having been destroyed), and unsubscribing on onDestroy
+   does prevent this.
+</p>

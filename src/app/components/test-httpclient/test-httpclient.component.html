@@ -1,1 +1,20 @@
-<p>test-httpclient works!</p>
+<h4>test-httpclient component</h4>
+
+<p>Pressing either button will trigger an HttpClient request following by an immediate switch back to the Home component.</p>
+
+<p>The first button does not unsubscribe from the request in ngOnDestroy, the second does.</p>
+
+<p>When pressing the first button the console will log the request being handled after the component is destroyed.</p>
+
+<p>When pressing the second button the request is not handled.</p>
+
+<p>The HttpClient is not garbage collected in either case.</p>
+
+<div>
+   <input type="button" value="Fire request and exit" (click)="onFireRequestAndExit_Click(false)">
+</div>
+
+<div>
+   <input type="button" value="Fire request, unsubscribe and exit" (click)="onFireRequestAndExit_Click(true)">
+</div>
+
